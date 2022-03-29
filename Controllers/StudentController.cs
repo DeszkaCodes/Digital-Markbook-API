@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Services;
 using SchoolAPI.Classes;
 using SchoolAPI.Models;
+using System.Collections.Immutable;
 
 namespace SchoolAPI.Controllers;
 
@@ -97,12 +98,34 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("{id}/name")]
+    public ActionResult<string> GetName(Guid id)
+    {
+        var student = _service.GetById(id);
+
+        if (student is null || student.Name is null)
+            return NotFound();
+
+        return student.Name;
+    }
+
     [HttpPatch("{id}/gender")]
     public IActionResult UpdateGender(Guid id, Gender gender)
     {
         _service.UpdateGender(id, gender);
 
         return Ok();
+    }
+
+    [HttpGet("{id}/gender")]
+    public ActionResult<Gender> GetGender(Guid id)
+    {
+        var student = _service.GetById(id);
+
+        if (student is null)
+            return NotFound();
+
+        return student.Gender;
     }
 
     [HttpPatch("{id}/dateofbirth")]
@@ -121,6 +144,17 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("{id}/dateofbirth")]
+    public ActionResult<DateTime> GetDateOfBirth(Guid id)
+    {
+        var student = _service.GetById(id);
+
+        if (student is null)
+            return NotFound();
+
+        return student.DateOfBirth;
+    }
+
     [HttpPatch("{id}/school")]
     public IActionResult UpdateSchool(Guid id, Guid schoolId)
     {
@@ -137,5 +171,16 @@ public class StudentController : ControllerBase
         {
             return BadRequest();
         }
+    }
+
+    [HttpGet("{id}/school")]
+    public ActionResult<School> GetSchool(Guid id)
+    {
+        var student = _service.GetById(id);
+
+        if (student is null || student.School is null)
+            return NotFound();
+
+        return student.School;
     }
 }
