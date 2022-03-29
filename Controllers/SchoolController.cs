@@ -57,7 +57,7 @@ public class SchoolController : ControllerBase
         return school;
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
         var school = _service.GetById(id);
