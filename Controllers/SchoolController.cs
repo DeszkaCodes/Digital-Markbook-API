@@ -17,9 +17,12 @@ public class SchoolController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<School>> GetAll() 
+    public ActionResult<List<School>> GetAll(int? limit) 
     {
+        if(limit is not null && limit > 0)
+            return _service.GetAll().Take((int)limit).ToList();
 
+        return _service.GetAll().ToList();
     }
     
     [HttpGet("{id}")]
