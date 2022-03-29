@@ -33,6 +33,12 @@ public class TeacherService : IService<Teacher>
         _context.Teachers
             .Add(teacher);
 
+        if(teacher.School is null)
+            throw new ArgumentNullException("School cannot be null");
+
+        _context.Schools
+            .Attach(teacher.School);
+
         _context.SaveChanges();
     }
 
@@ -42,6 +48,9 @@ public class TeacherService : IService<Teacher>
         {
             _context.Teachers
                 .Add(teacher);
+
+            if (teacher.School is not null)
+                _context.Schools.Attach(teacher.School);
         }
 
         _context.SaveChanges();
