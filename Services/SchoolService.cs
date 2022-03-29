@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Classes;
 using SchoolAPI.Models;
 using SchoolAPI.Data;
 
@@ -60,5 +61,29 @@ public class SchoolService : IService<School>
             .Count(school => school.Id == id);
 
         return count > 0;
+    }
+
+    public void UpdateName(Guid id, string name)
+    {
+        var school = _context.Schools.Find(id);
+
+        if(school is null)
+            throw new NullReferenceException("School does not exist");
+
+        school.Name = name;
+
+        _context.SaveChanges();
+    }
+
+    public void UpdateType(Guid id, SchoolType type)
+    {
+        var school = _context.Schools.Find(id);
+
+        if(school is null)
+            throw new NullReferenceException("School does not exist");
+
+        school.Type = type;
+
+        _context.SaveChanges();
     }
 }
