@@ -4,7 +4,7 @@ using SchoolAPI.Data;
 
 namespace SchoolAPI.Services;
 
-public class TeacherService
+public class TeacherService : IService<Teacher>
 {
     private readonly SchoolContext _context;
 
@@ -25,7 +25,15 @@ public class TeacherService
             .SingleOrDefault(teacher => teacher.Id == id);
     }
 
-    public Teacher[] Create(Teacher[] teachers)
+    public void Create(Teacher teacher)
+    {
+        _context.Teachers
+            .Add(teacher);
+
+        _context.SaveChanges();
+    }
+
+    public void Create(Teacher[] teachers)
     {
         foreach(var teacher in teachers)
         {
@@ -34,7 +42,13 @@ public class TeacherService
         }
 
         _context.SaveChanges();
+    }
 
-        return teachers;
+    public bool IdExists(Guid id)
+    {
+        var count = _context.Teachers
+            .Count(teacher => teacher.Id == id);
+
+        return count > 0;
     }
 }

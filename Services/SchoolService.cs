@@ -4,7 +4,7 @@ using SchoolAPI.Data;
 
 namespace SchoolAPI.Services;
 
-public class SchoolService
+public class SchoolService : IService<School>
 {
     private readonly SchoolContext _context;
 
@@ -25,7 +25,15 @@ public class SchoolService
             .SingleOrDefault(school => school.Id == id);
     }
 
-    public School[] Create(School[] schools)
+    public void Create(School school)
+    {
+        _context.Schools
+            .Add(school);
+
+        _context.SaveChanges();
+    }
+
+    public void Create(School[] schools)
     {
         foreach(var school in schools)
         {
@@ -34,7 +42,13 @@ public class SchoolService
         }
 
         _context.SaveChanges();
+    }
 
-        return schools;
+    public bool IdExists(Guid id)
+    {
+        var count = _context.Schools
+            .Count(school => school.Id == id);
+
+        return count > 0;
     }
 }
