@@ -10,8 +10,8 @@ This project is still **unfinished** so many things are still not implemented.
 
 ### Implements
 - [x] Student Controller
-- [ ] School Controller (ONWORK)
-- [ ] Teacher Controller
+- [x] School Controller
+- [ ] Teacher Controller (ONWORK)
 - [ ] Grades Controller
 - [ ] Absence Controller
 - [ ] Timetable Controller
