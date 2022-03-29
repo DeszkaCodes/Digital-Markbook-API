@@ -44,6 +44,16 @@ public class TeacherService : IService<Teacher>
         _context.SaveChanges();
     }
 
+    public void DeleteById(Guid id)
+    {
+        var toDelete = _context.Teachers.Find(id);
+        if(toDelete is not null)
+        {
+            _context.Teachers.Remove(toDelete);
+            _context.SaveChanges();
+        }
+    }
+
     public bool IdExists(Guid id)
     {
         var count = _context.Teachers

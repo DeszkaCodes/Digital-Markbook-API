@@ -44,6 +44,16 @@ public class SchoolService : IService<School>
         _context.SaveChanges();
     }
 
+    public void DeleteById(Guid id)
+    {
+        var toDelete = _context.Schools.Find(id);
+        if(toDelete is not null)
+        {
+            _context.Schools.Remove(toDelete);
+            _context.SaveChanges();
+        }
+    }
+
     public bool IdExists(Guid id)
     {
         var count = _context.Schools

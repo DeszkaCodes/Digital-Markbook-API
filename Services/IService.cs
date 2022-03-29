@@ -10,5 +10,7 @@ public interface IService<T>
 
     public void Create(T[] model);
 
+    public void DeleteById(Guid id);
+
     public bool IdExists(Guid id);
 }
