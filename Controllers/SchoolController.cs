@@ -94,6 +94,17 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("{id}/name")]
+    public ActionResult<string> GetName(Guid id)
+    {
+        var school = _service.GetById(id);
+
+        if (school is null || school.Name is null)
+            return NotFound();
+
+        return school.Name;
+    }
+
     [HttpPatch("{id}/type")]
     public IActionResult UpdateType(Guid id, SchoolType type)
     {
@@ -103,5 +114,16 @@ public class SchoolController : ControllerBase
         _service.UpdateType(id, type);
 
         return Ok();
+    }
+
+    [HttpGet("{id}/type")]
+    public ActionResult<SchoolType> GetType(Guid id)
+    {
+        var school = _service.GetById(id);
+
+        if (school is null)
+            return NotFound();
+
+        return school.Type;
     }
 }
