@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using SchoolAPI.Models;
 using SchoolAPI.Services;
-using SchoolAPI.Generators;
+using SchoolAPI.Classes;
+using SchoolAPI.Models;
 
 namespace SchoolAPI.Controllers;
 
@@ -26,12 +26,53 @@ public class SchoolController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public ActionResult<School> Get(Guid id){
+    public ActionResult<School> Get(Guid id)
+    {
         var school = _service.GetById(id);
 
         if(school is null)
             return NotFound();
 
         return school;
+    }
+
+    [HttpPost]
+    public ActionResult<School> Create(string name, SchoolType type)
+    {
+        Guid id;
+
+        do
+        {
+            id = Guid.NewGuid();
+        } while(_service.IdExists(id));
+
+        var school = new School()
+            {
+                Name = name.ToTitleCase(),
+                Type = type
+            };
+
+        _service.Create(school);
+
+        return school;
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(Guid id)
+    {
+        var school = _service.GetById(id);
+
+        if(school is null)
+            return NotFound();
+
+        _service.DeleteById(id);
+
+        return Ok();
+    }
+
+    [HttpPut("name")]
+    public IActionResult UpdateName(string name)
+    {
+        
     }
 }
