@@ -1,6 +1,6 @@
 #ignore
 .*
-*.db-*
+*.db*
 obj
 obj/*
 bin
