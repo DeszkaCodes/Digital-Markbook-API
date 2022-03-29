@@ -10,10 +10,12 @@ namespace SchoolAPI.Controllers;
 public class SchoolController : ControllerBase
 {
     private SchoolService _service;
+    private TeacherService _teacherService;
 
-    public SchoolController(SchoolService service)
+    public SchoolController(SchoolService service, TeacherService teacherService)
     {
         _service = service;
+        _teacherService = teacherService;
     }
 
     [HttpGet]
@@ -34,6 +36,17 @@ public class SchoolController : ControllerBase
             return NotFound();
 
         return school;
+    }
+
+    [HttpGet("{id}/teachers")]
+    public ActionResult<IEnumerable<Teacher>> GetAllTeachers(Guid id)
+    {
+        var school = _service.GetById(id);
+
+        if (school is null)
+            return NotFound();
+
+        return _service.GetTeachersById(id).ToList();
     }
 
     [HttpPost]

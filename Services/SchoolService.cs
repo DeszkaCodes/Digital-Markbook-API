@@ -14,10 +14,19 @@ public class SchoolService : IService<School>
         _context = context;
     }
 
-    public IEnumerable<School> GetAll(){
+    public IEnumerable<School> GetAll()
+    {
         return _context.Schools
             .AsNoTracking()
             .ToList();
+    }
+
+    public IEnumerable<Teacher> GetTeachersById(Guid id)
+    {
+        return _context.Teachers
+            .Include(teacher => teacher.School)
+            .Where(teacher => teacher.School != null && teacher.School.Id == id)
+            .AsNoTracking();
     }
 
     public School? GetById(Guid id){
