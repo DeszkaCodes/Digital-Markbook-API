@@ -56,7 +56,7 @@ public class StudentController : ControllerBase
         do
         {
             id = Guid.NewGuid();
-        }while(_service.GetById(id) is not null);
+        }while(_service.IdExists(id));
 
         var student = new Student()
             {
@@ -67,8 +67,9 @@ public class StudentController : ControllerBase
                 School = school
             };
 
-        return
-            _service.Create(student);
+        _service.Create(student);
+
+        return student;
     }
 
     [HttpDelete("{id}")]
