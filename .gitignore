@@ -8,3 +8,4 @@ bin/*
 
 #still let
 !.gitignore
+!.vscode
