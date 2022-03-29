@@ -70,7 +70,7 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}/name")]
+    [HttpPatch("{id}/name")]
     public IActionResult UpdateName(Guid id, string name)
     {
         if(_service.GetById(id) is null)
@@ -81,7 +81,7 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}/type")]
+    [HttpPatch("{id}/type")]
     public IActionResult UpdateType(Guid id, SchoolType type)
     {
         if(_service.GetById(id) is null)

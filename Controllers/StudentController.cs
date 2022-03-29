@@ -86,7 +86,7 @@ public class StudentController : ControllerBase
         return NotFound();        
     }
 
-    [HttpPut("{id}/name")]
+    [HttpPatch("{id}/name")]
     public IActionResult UpdateName(Guid id, string name)
     {
         if(_service.GetById(id) is null)
@@ -97,7 +97,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}/gender")]
+    [HttpPatch("{id}/gender")]
     public IActionResult UpdateGender(Guid id, Gender gender)
     {
         _service.UpdateGender(id, gender);
@@ -105,7 +105,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}/dateofbirth")]
+    [HttpPatch("{id}/dateofbirth")]
     public IActionResult UpdateDateOfBirth(Guid id, string dateofbirth)
     {
         var date = DateTime.Now;
@@ -121,7 +121,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}/school")]
+    [HttpPatch("{id}/school")]
     public IActionResult UpdateSchool(Guid id, Guid schoolId)
     {
         try
