@@ -70,9 +70,25 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("name")]
-    public IActionResult UpdateName(string name)
+    [HttpPut("{id}/name")]
+    public IActionResult UpdateName(Guid id, string name)
     {
-        
+        if(_service.GetById(id) is null)
+            return NotFound();
+
+        _service.UpdateName(id, name);
+
+        return Ok();
+    }
+
+    [HttpPut("{id}/type")]
+    public IActionResult UpdateType(Guid id, SchoolType type)
+    {
+        if(_service.GetById(id) is null)
+            return NotFound();
+
+        _service.UpdateType(id, type);
+
+        return Ok();
     }
 }
