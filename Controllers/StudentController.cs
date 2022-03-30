@@ -23,10 +23,13 @@ public class StudentController : ControllerBase
     [HttpGet]
     public ActionResult<List<Student>> GetMany(int? limit)
     {
-        if(limit is not null && limit > 0)
-            return _service.GetAll().Take((int)limit).ToList();
-        
-        return _service.GetAll().ToList();
+        if(limit is null)
+            return _service.GetAll().ToList();
+            
+        if(limit <= 0)
+            return BadRequest();
+            
+        return _service.GetAll().Take((int)limit).ToList();
     }
 
     [HttpGet("{id}")]
