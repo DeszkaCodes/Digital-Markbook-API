@@ -15,5 +15,5 @@ public class Student : Human
     public Class? Class { get; set; }
 
     [JsonIgnore]
-    public ICollection<Marks>? Marks { get; set; }
+    public ICollection<Mark>? Marks { get; set; }
 }

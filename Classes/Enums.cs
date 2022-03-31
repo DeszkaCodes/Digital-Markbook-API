@@ -16,3 +16,9 @@ public enum SchoolType
     College,
     University
 }
+
+public enum SubjectType
+{
+    Art,
+    Science
+}
