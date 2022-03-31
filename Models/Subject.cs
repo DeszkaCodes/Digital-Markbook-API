@@ -14,6 +14,9 @@ public class Subject
     [Required]
     public SubjectType Type { get; set; }
 
-    [JsonIgnore]
+    [Required]
     public School? School { get; set; }
+    
+    [Required]
+    public Teacher? Teacher { get; set; }
 }
