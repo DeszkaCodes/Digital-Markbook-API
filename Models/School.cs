@@ -20,4 +20,7 @@ public class School
     [JsonIgnore]
     public List<Teacher>? Teachers { get; set; }
 
+    [JsonIgnore]
+    public List<Subject>? Subjects { get; set; }
+
 }
