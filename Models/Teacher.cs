@@ -8,4 +8,10 @@ public class Teacher : Human
 {
     [Required]
     public School? School { get; set; }
+
+    [JsonIgnore]
+    public ICollection<Subject>? Subjects { get; set; }
+    
+    [JsonIgnore]
+    public Class? Class { get; set; }
 }

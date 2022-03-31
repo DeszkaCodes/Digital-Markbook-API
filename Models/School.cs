@@ -15,9 +15,8 @@ public class School
     public SchoolType Type { get; set; }
     
     [JsonIgnore]
-    public List<Student>? Students { get; set; }
-    
-    [JsonIgnore]
-    public List<Teacher>? Teachers { get; set; }
+    public ICollection<Student>? Students { get; set; }
 
+    [JsonIgnore]
+    public ICollection<Teacher>? Teachers { get; set; }
 }
