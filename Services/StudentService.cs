@@ -18,6 +18,7 @@ public class StudentService : IService<Student>
     {
         return _context.Students
             .Include(student => student.School)
+            .Include(student => student.Class)
             .AsNoTracking()
             .ToList();
     }
@@ -26,6 +27,7 @@ public class StudentService : IService<Student>
     {
         return _context.Students
             .Include(student => student.School)
+            .Include(student => student.Class)
             .AsNoTracking()
             .SingleOrDefault(student => student.Id == id);
     }
@@ -49,8 +51,14 @@ public class StudentService : IService<Student>
         if(student.School is null)
             throw new ArgumentNullException("School cannot be null");
 
+        if(student.Class is null)
+            throw new ArgumentNullException("Class cannot be null");
+
         _context.Schools
             .Attach(student.School);
+
+        _context.Classes
+            .Attach(student.Class);
 
         _context.SaveChanges();
     }
@@ -122,6 +130,8 @@ public class StudentService : IService<Student>
 
         _context.SaveChanges();
     }
+
+    //TODO: update class
 
     public bool IdExists(Guid id)
     {
