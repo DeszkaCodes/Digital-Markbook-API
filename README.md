@@ -12,11 +12,12 @@ This project is still **unfinished** so many things are still not implemented.
 - [x] Student Controller
 - [x] School Controller
 - [x] Teacher Controller
-- [ ] Classes Controller
+- [ ] Subject Controller
 - [ ] Grades Controller
 - [ ] Absence Controller
 - [ ] Timetable Controller
 - [ ] News Controller
+- [ ] Login Creditental Controller
 
 ### Bugs to fix
 
