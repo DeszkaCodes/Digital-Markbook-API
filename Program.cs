@@ -48,7 +48,10 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<SchoolContext>();
         if(context.Database.EnsureCreated())
         {
-            //Generator.StartGenerating(context, 100, 100);
+            Generator.StartGenerating(
+                context,
+                12000, 600, 300, 150
+            );
         }
     }
 }
