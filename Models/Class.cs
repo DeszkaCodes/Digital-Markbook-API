@@ -22,4 +22,10 @@ public class Class
 
     [JsonIgnore]
     public ICollection<Subject>? Subjects { get; set; }
+
+    public Class()
+    {
+        Students = new List<Student>();
+        Subjects = new List<Subject>();
+    }
 }

@@ -16,4 +16,9 @@ public class Student : Human
 
     [JsonIgnore]
     public ICollection<Mark>? Marks { get; set; }
+
+    public Student()
+    {
+        Marks = new List<Mark>();
+    }
 }

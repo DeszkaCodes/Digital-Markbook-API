@@ -21,4 +21,10 @@ public class Subject
 
     [JsonIgnore]
     public ICollection<Mark>? Marks { get; set; }
+
+    public Subject()
+    {
+        Teachers = new List<Teacher>();
+        Marks = new List<Mark>();
+    }
 }

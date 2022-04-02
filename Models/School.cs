@@ -22,4 +22,11 @@ public class School
 
     [JsonIgnore]
     public List<Subject>? Subjects { get; set; }
+
+    public School()
+    {
+        Students = new List<Student>();
+        Teachers = new List<Teacher>();
+        Subjects = new List<Subject>();
+    }
 }

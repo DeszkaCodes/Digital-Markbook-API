@@ -15,4 +15,9 @@ public class Teacher : Human
     
     [JsonIgnore]
     public Class? Class { get; set; }
+
+    public Teacher()
+    {
+        this.Subjects = new List<Subject>();
+    }
 }

@@ -4,8 +4,12 @@ namespace SchoolAPI.Models;
 
 public class Mark
 {
+    [Key]
     public Guid Id { get; set; }
     
+    [Required]
+    public byte Value { get; set; }
+
     [Required]
     public Subject? Subject { get; set; }
     
