@@ -16,20 +16,30 @@ public class StudentService : IService<Student>
 
     public IEnumerable<Student> GetAll()
     {
+        #nullable disable
         return _context.Students
             .Include(student => student.School)
             .Include(student => student.Class)
+            .Include(student => student.Class.HeadMaster)
+            .Include(student => student.Class.HeadMaster.School)
+            .Include(student => student.Class.School)
             .AsNoTracking()
             .ToList();
+        #nullable enable
     }
 
     public Student? GetById(Guid id)
     {
+        #nullable disable
         return _context.Students
             .Include(student => student.School)
             .Include(student => student.Class)
+            .Include(student => student.Class.HeadMaster)
+            .Include(student => student.Class.HeadMaster.School)
+            .Include(student => student.Class.School)
             .AsNoTracking()
             .SingleOrDefault(student => student.Id == id);
+        #nullable enable
     }
 
     public void Create(Student[] students)
