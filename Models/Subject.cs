@@ -15,10 +15,9 @@ public class Subject
     public SubjectType Type { get; set; }
 
     [Required]
+    public Class? Class { get; set; }
+    
     public ICollection<Teacher>? Teachers { get; set; }
-
-    [JsonIgnore]
-    public ICollection<Class>? Class { get; set; }
 
     [JsonIgnore]
     public ICollection<Mark>? Marks { get; set; }
