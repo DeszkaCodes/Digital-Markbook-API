@@ -64,6 +64,7 @@ public class SchoolController : ControllerBase
 
         var school = new School()
             {
+                Id = id,
                 Name = name.ToTitleCase(),
                 Type = type
             };
