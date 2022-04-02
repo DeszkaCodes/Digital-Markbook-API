@@ -100,6 +100,17 @@ public class TeacherController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("{id}/name")]
+    public ActionResult<string> GetName(Guid id)
+    {
+        var teacher = _service.GetById(id);
+
+        if (teacher is null || teacher.Name is null)
+            return NotFound();
+
+        return teacher.Name;
+    }   
+
     [HttpPatch("{id}/gender")]
     public IActionResult UpdateGender(Guid id, Gender gender)
     {
@@ -111,6 +122,17 @@ public class TeacherController : ControllerBase
         _service.UpdateGender(id, gender);
 
         return Ok();
+    }
+    
+    [HttpGet("{id}/gender")]
+    public ActionResult<Gender> GetGender(Guid id)
+    {
+        var teacher = _service.GetById(id);
+
+        if (teacher is null)
+            return NotFound();
+
+        return teacher.Gender;
     }
 
     [HttpPatch("{id}/dateofbirth")]
@@ -131,6 +153,17 @@ public class TeacherController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("{id}/dateofbirth")]
+    public ActionResult<DateTime> GetDateOfBirth(Guid id)
+    {
+        var teacher = _service.GetById(id);
+
+        if (teacher is null)
+            return NotFound();
+
+        return teacher.DateOfBirth;
+    }
+
     [HttpPatch("{id}/school")]
     public IActionResult UpdateSchool(Guid id, Guid schoolId)
     {
@@ -143,5 +176,16 @@ public class TeacherController : ControllerBase
         _service.UpdateSchool(id, schoolId);
 
         return Ok();
+    }
+
+    [HttpGet("{id}/school")]
+    public ActionResult<School> GetSchool(Guid id)
+    {
+        var teacher = _service.GetById(id);
+
+        if (teacher is null || teacher.School is null)
+            return NotFound();
+
+        return teacher.School;
     }
 }

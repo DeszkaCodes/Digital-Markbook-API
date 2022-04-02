@@ -11,11 +11,13 @@ This project is still **unfinished** so many things are still not implemented.
 ### Implements
 - [x] Student Controller
 - [x] School Controller
-- [ ] Teacher Controller (ONWORK)
+- [x] Teacher Controller
+- [ ] Subject Controller
 - [ ] Grades Controller
 - [ ] Absence Controller
 - [ ] Timetable Controller
 - [ ] News Controller
+- [ ] Login Creditental Controller
 
 ### Bugs to fix
 

@@ -19,4 +19,7 @@ public class School
 
     [JsonIgnore]
     public ICollection<Teacher>? Teachers { get; set; }
+
+    [JsonIgnore]
+    public List<Subject>? Subjects { get; set; }
 }
