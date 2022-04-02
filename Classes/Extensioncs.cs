@@ -4,11 +4,11 @@ namespace SchoolAPI.Classes;
 
 public static class Extensions
 {
-    public static T SelectRandom<T>(this T[] array)
+    public static T SelectRandom<T>(this IEnumerable<T> array)
     {
         var rnd = new Random();
 
-        return array[rnd.Next(0, array.Length)];
+        return array.ElementAt(rnd.Next(0, array.Count()));
     }
 
     public static string ToTitleCase(this string title)
