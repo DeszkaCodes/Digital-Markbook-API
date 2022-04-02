@@ -102,10 +102,12 @@ public class SchoolController : ControllerBase
     {
         var school = _service.GetById(id);
 
-        if (school is null || school.Name is null)
+        if(school is null || school.Name is null)
             return NotFound();
 
-        return school.Name;
+        return Ok(new {
+            name = school.Name
+        });
     }
 
     [HttpPatch("{id}/type")]
@@ -127,6 +129,8 @@ public class SchoolController : ControllerBase
         if (school is null)
             return NotFound();
 
-        return school.Type;
+        return Ok(new {
+            type = school.Type
+        });
     }
 }

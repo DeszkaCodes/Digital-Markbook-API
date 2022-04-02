@@ -109,7 +109,9 @@ public class StudentController : ControllerBase
         if (student is null || student.Name is null)
             return NotFound();
 
-        return student.Name;
+        return Ok(new {
+            name = student.Name
+        });
     }
 
     [HttpPatch("{id}/gender")]
@@ -128,7 +130,9 @@ public class StudentController : ControllerBase
         if (student is null)
             return NotFound();
 
-        return student.Gender;
+        return Ok(new {
+            gender = student.Gender
+        });
     }
 
     [HttpPatch("{id}/dateofbirth")]
@@ -184,6 +188,8 @@ public class StudentController : ControllerBase
         if (student is null || student.School is null)
             return NotFound();
 
-        return student.School;
+        return Ok(new {
+            school = student.School
+        });
     }
 }
