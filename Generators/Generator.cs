@@ -11,6 +11,7 @@ public static class Generator
     public static Student[] CurrentStudents { get; set; } = new Student[0];
 
     public static Teacher[] CurrentTeachers { get; set; } = new Teacher[0];
+    public static Subject[] CurrentSubjects { get; set; } = new Subject[0];
 
     public static void StartGenerating(SchoolContext context, int studentAmount, int teacherAmount)
     {
