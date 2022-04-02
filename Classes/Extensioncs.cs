@@ -14,9 +14,9 @@ public static class Extensions
     /// <exception cref="ArgumentException">If the given amount is more than the length of the array</exception>
     public static IEnumerable<T> SelectManyRandom<T>(this IEnumerable<T> array, int amount)
     {
-        bool Contains(T[] array, T item)
+        bool Contains(List<T> array, T item)
         {
-            for(int i = 0; i < array.Length; i++)
+            for(int i = 0; i < array.Count; i++)
             {
                 if(EqualityComparer<T>.Default.Equals(array[i], item))
                     return true;
@@ -27,7 +27,7 @@ public static class Extensions
         if(array.Count() < amount)
             throw new ArgumentException("Amount is greater than the IEnumerable<T> size");
 
-        T[] items = new T[amount];
+        List<T> items = new List<T>();
 
         for(int i = 0; i < amount; i++)
         {
@@ -38,7 +38,10 @@ public static class Extensions
                 item = array.SelectRandom();
 
                 if(!Contains(items, item))
+                {
+                    items.Add(item);
                     contains = false;
+                }
 
             } while(contains);
         }
