@@ -16,6 +16,7 @@ public class Human
     public Human(Guid id, string name, DateTime dateofbirth, Gender gender = Gender.NotGiven)
     {
         Id = id;
+        Name = name;
         DateOfBirth = dateofbirth;
         Gender = gender;
     }
