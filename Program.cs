@@ -20,6 +20,9 @@ builder.Services.AddSqlite<SchoolContext>("Data Source=./School.db");
 builder.Services.AddScoped<SchoolService>();
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<TeacherService>();
+builder.Services.AddScoped<SubjectService>();
+builder.Services.AddScoped<ClassService>();
+builder.Services.AddScoped<MarkService>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
