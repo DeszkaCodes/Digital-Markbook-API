@@ -1,4 +1,5 @@
-﻿using SchoolAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Data;
 using SchoolAPI.Models;
 
 namespace SchoolAPI.Services;
@@ -14,31 +15,80 @@ public class GradeService : IService<Grade>
 
     public void Create(Grade model)
     {
-        throw new NotImplementedException();
+        if(model.Subject is null)
+            throw new ArgumentNullException("Subject cannot be null");
+
+        if(model.Student is null)
+            throw new ArgumentNullException("Student cannot be null");
+
+        _context.Grades.Add(model);
+        _context.Students.Attach(model.Student);
+        _context.Subjects.Attach(model.Subject);
+
+        _context.SaveChanges();
     }
 
     public void Create(Grade[] model)
     {
-        throw new NotImplementedException();
+        for(int i = 0; i < model.Length; i++)
+        {
+            Create(model[i]);
+        }
     }
 
     public void DeleteById(Guid id)
     {
-        throw new NotImplementedException();
+        var grade = _context.Grades.Find(id);
+
+        if(grade is null)
+            throw new NullReferenceException("Grade not found");
+
+        _context.Grades.Remove(grade);
+
+        _context.SaveChanges();
     }
 
     public IEnumerable<Grade> GetAll()
     {
-        throw new NotImplementedException();
+    #nullable disable
+        return _context.Grades
+            .Include(grade => grade.Subject)
+            .Include(grade => grade.Subject.Class)
+            .Include(grade => grade.Subject.Class.School)
+            .Include(grade => grade.Subject.Class.HeadMaster)
+            .Include(grade => grade.Subject.Class.HeadMaster.School)
+            .Include(grade => grade.Student)
+            .Include(grade => grade.Student.School)
+            .Include(grade => grade.Student.Class)
+            .Include(grade => grade.Student.Class.School)
+            .Include(grade => grade.Student.Class.HeadMaster)
+            .Include(grade => grade.Student.Class.HeadMaster.School)
+            .AsNoTracking();
+    #nullable enable
     }
 
     public Grade? GetById(Guid id)
     {
-        throw new NotImplementedException();
+#nullable disable
+        return _context.Grades
+            .Include(grade => grade.Subject)
+            .Include(grade => grade.Subject.Class)
+            .Include(grade => grade.Subject.Class.School)
+            .Include(grade => grade.Subject.Class.HeadMaster)
+            .Include(grade => grade.Subject.Class.HeadMaster.School)
+            .Include(grade => grade.Student)
+            .Include(grade => grade.Student.School)
+            .Include(grade => grade.Student.Class)
+            .Include(grade => grade.Student.Class.School)
+            .Include(grade => grade.Student.Class.HeadMaster)
+            .Include(grade => grade.Student.Class.HeadMaster.School)
+            .AsNoTracking()
+            .SingleOrDefault(grade => grade.Id == id);
+    #nullable enable
     }
 
     public bool IdExists(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Grades.Find(id) is not null;
     }
 }
