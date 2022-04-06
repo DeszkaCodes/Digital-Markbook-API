@@ -1,5 +1,6 @@
 ﻿using SchoolAPI.Data;
 using SchoolAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolAPI.Services;
 
@@ -29,12 +30,25 @@ public class ClassService : IService<Class>
 
     public IEnumerable<Class> GetAll()
     {
-        throw new NotImplementedException();
+        #nullable disable
+        return _context.Classes
+            .Include(c => c.School)
+            .Include(c => c.HeadMaster)
+            .Include(c => c.HeadMaster.School)
+            .AsNoTracking();
+        #nullable enable
     }
 
     public Class? GetById(Guid id)
     {
-        throw new NotImplementedException();
+        #nullable disable
+        return _context.Classes
+            .Include(c => c.School)
+            .Include(c => c.HeadMaster)
+            .Include(c => c.HeadMaster.School)
+            .AsNoTracking()
+            .FirstOrDefault(c => c.Id == id);
+        #nullable enable
     }
 
     public bool IdExists(Guid id)

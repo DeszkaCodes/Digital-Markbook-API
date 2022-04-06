@@ -14,7 +14,7 @@ public class Teacher : Human
     public ICollection<Subject>? Subjects { get; set; }
     
     [JsonIgnore]
-    public Class? Class { get; set; }
+    public SchoolClass? Class { get; set; }
 
     public Teacher()
     {

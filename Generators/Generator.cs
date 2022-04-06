@@ -10,7 +10,7 @@ public static class Generator
 {
     private static School[] _schools = new School[0];
     private static Teacher[] _teachers = new Teacher[0];
-    private static Class[] _classes = new Class[0];
+    private static SchoolClass[] _classes = new SchoolClass[0];
     private static Subject[] _subjects = new Subject[0];
     private static Student[] _students = new Student[0];
     private static Mark[] _marks = new Mark[0];
@@ -60,7 +60,7 @@ public static class Generator
     }
 
     private static Mark[] Mark(
-        School[] schools, Subject[] subjects, Student[] students, Class[] classes, int marksPerSubject)
+        School[] schools, Subject[] subjects, Student[] students, SchoolClass[] classes, int marksPerSubject)
     {
         var marks = new List<Mark>();
         var rnd = new Random();
@@ -153,9 +153,9 @@ public static class Generator
         return teachers.ToArray();
     }
 
-    private static Class[] Class(School[] schools, Teacher[] teachers, int classAmount)
+    private static SchoolClass[] Class(School[] schools, Teacher[] teachers, int classAmount)
     {
-        var classes = new List<Class>();
+        var classes = new List<SchoolClass>();
 
         var rnd = new Random();
 
@@ -171,7 +171,7 @@ public static class Generator
                 var teacher = teachersInSchool[0];
                 teachersInSchool.RemoveAt(0);
 
-                var lclass = new Class()
+                var lclass = new SchoolClass()
                 {
                     Id = id,
                     Name = name,
@@ -188,7 +188,7 @@ public static class Generator
         return classes.ToArray();
     }
 
-    private static Subject[] Subject(School[] schools, Teacher[] teachers, Class[] classes, int subjectAmount)
+    private static Subject[] Subject(School[] schools, Teacher[] teachers, SchoolClass[] classes, int subjectAmount)
     {
         var subjects = new List<Subject>();
 
@@ -227,7 +227,7 @@ public static class Generator
         return subjects.ToArray();
     }
 
-    private static Student[] Student(School[] schools, Class[] classes, int studentAmount)
+    private static Student[] Student(School[] schools, SchoolClass[] classes, int studentAmount)
     {
         var students = new List<Student>();
 

@@ -12,7 +12,7 @@ public class Student : Human
     public School? School { get; set; }
 
     [Required]
-    public Class? Class { get; set; }
+    public SchoolClass? Class { get; set; }
 
     [JsonIgnore]
     public ICollection<Mark>? Marks { get; set; }

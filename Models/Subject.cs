@@ -15,7 +15,7 @@ public class Subject
     public SubjectType Type { get; set; }
 
     [Required]
-    public Class? Class { get; set; }
+    public SchoolClass? Class { get; set; }
     
     public ICollection<Teacher>? Teachers { get; set; }
 
