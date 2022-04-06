@@ -22,7 +22,7 @@ builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<SubjectService>();
 builder.Services.AddScoped<SchoolClassService>();
-builder.Services.AddScoped<MarkService>();
+builder.Services.AddScoped<GradeService>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {

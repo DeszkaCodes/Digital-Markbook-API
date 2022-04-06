@@ -15,10 +15,10 @@ public class Student : Human
     public SchoolClass? Class { get; set; }
 
     [JsonIgnore]
-    public ICollection<Mark>? Marks { get; set; }
+    public ICollection<Grade>? Marks { get; set; }
 
     public Student()
     {
-        Marks = new List<Mark>();
+        Marks = new List<Grade>();
     }
 }

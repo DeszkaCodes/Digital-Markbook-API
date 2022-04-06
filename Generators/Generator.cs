@@ -13,7 +13,7 @@ public static class Generator
     private static SchoolClass[] _classes = new SchoolClass[0];
     private static Subject[] _subjects = new Subject[0];
     private static Student[] _students = new Student[0];
-    private static Mark[] _marks = new Mark[0];
+    private static Grade[] _marks = new Grade[0];
 
 
     public static void StartGenerating(SchoolContext context, int studentAmount, int teacherAmount, int classAmount, int subjectAmount)
@@ -52,17 +52,17 @@ public static class Generator
         context.Schools.AddRange(_schools);
         context.Teachers.AddRange(_teachers);
         context.Classes.AddRange(_classes);
-        context.Marks.AddRange(_marks);
+        context.Grades.AddRange(_marks);
         context.Subjects.AddRange(_subjects);
         context.Students.AddRange(_students);
 
         context.SaveChanges();
     }
 
-    private static Mark[] Mark(
+    private static Grade[] Mark(
         School[] schools, Subject[] subjects, Student[] students, SchoolClass[] classes, int marksPerSubject)
     {
-        var marks = new List<Mark>();
+        var marks = new List<Grade>();
         var rnd = new Random();
 
         for(var sch = 0; sch < subjects.Length; sch++)
@@ -77,7 +77,7 @@ public static class Generator
                 var student = studentsInSubject[stud];
                 for(int i = 0; i < marksPerSubject; i++)
                 {
-                    var mark = new Mark
+                    var mark = new Grade
                     {
                         Id = Guid.NewGuid(),
                         Student = student,

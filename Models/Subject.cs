@@ -20,11 +20,11 @@ public class Subject
     public ICollection<Teacher>? Teachers { get; set; }
 
     [JsonIgnore]
-    public ICollection<Mark>? Marks { get; set; }
+    public ICollection<Grade>? Marks { get; set; }
 
     public Subject()
     {
         Teachers = new List<Teacher>();
-        Marks = new List<Mark>();
+        Marks = new List<Grade>();
     }
 }

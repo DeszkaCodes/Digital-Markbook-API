@@ -14,6 +14,6 @@ public class SchoolContext : DbContext
     public DbSet<Student> Students => Set<Student>();
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<SchoolClass> Classes => Set<SchoolClass>();
-    public DbSet<Mark> Marks => Set<Mark>();
+    public DbSet<Grade> Grades => Set<Grade>();
     public DbSet<Subject> Subjects => Set<Subject>();
 }

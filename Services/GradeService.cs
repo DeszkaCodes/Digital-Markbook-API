@@ -3,7 +3,7 @@ using SchoolAPI.Models;
 
 namespace SchoolAPI.Services;
 
-public class MarkService : IService<Mark>
+public class MarkService : IService<Grade>
 {
     private readonly SchoolContext _context;
 
@@ -12,12 +12,12 @@ public class MarkService : IService<Mark>
         _context = context;
     }
 
-    public void Create(Mark model)
+    public void Create(Grade model)
     {
         throw new NotImplementedException();
     }
 
-    public void Create(Mark[] model)
+    public void Create(Grade[] model)
     {
         throw new NotImplementedException();
     }
@@ -27,12 +27,12 @@ public class MarkService : IService<Mark>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Mark> GetAll()
+    public IEnumerable<Grade> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public Mark? GetById(Guid id)
+    public Grade? GetById(Guid id)
     {
         throw new NotImplementedException();
     }
