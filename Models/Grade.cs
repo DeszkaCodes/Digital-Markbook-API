@@ -2,7 +2,7 @@
 
 namespace SchoolAPI.Models;
 
-public class Mark
+public class Grade
 {
     [Key]
     public Guid Id { get; set; }
