@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Services;
 using SchoolAPI.Classes;
 using SchoolAPI.Models;
-using System.Collections.Immutable;
 
 namespace SchoolAPI.Controllers;
 
