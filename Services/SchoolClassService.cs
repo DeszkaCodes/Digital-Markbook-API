@@ -26,6 +26,9 @@ public class SchoolClassService : IService<SchoolClass>
 
         _context.Classes.Add(model);
 
+        _context.Teachers.Attach(model.HeadMaster);
+        _context.Schools.Attach(model.School);
+
         _context.SaveChanges();
     }
 
