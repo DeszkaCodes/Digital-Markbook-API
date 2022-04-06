@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Services;
 using SchoolAPI.Models;
-using SchoolAPI.Classes;
 
 namespace SchoolAPI.Controllers;
 
