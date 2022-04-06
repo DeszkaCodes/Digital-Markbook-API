@@ -87,6 +87,24 @@ public class GradeService : IService<Grade>
     #nullable enable
     }
 
+    public void UpdateGrade(Guid id, byte gradeValue)
+    {
+        var grade = _context.Grades.Find(id);
+
+        if(grade is null)
+            throw new NullReferenceException("Grade not found");
+
+        if(gradeValue < 1 || gradeValue > 5)
+            throw new ArgumentOutOfRangeException("Grade must be between 1 and 5");
+
+        if(grade.Value == gradeValue)
+            return;
+
+        grade.Value = gradeValue;
+
+        _context.SaveChanges();
+    }
+
     public bool IdExists(Guid id)
     {
         return _context.Grades.Find(id) is not null;
