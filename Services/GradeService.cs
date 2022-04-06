@@ -3,11 +3,11 @@ using SchoolAPI.Models;
 
 namespace SchoolAPI.Services;
 
-public class MarkService : IService<Grade>
+public class GradeService : IService<Grade>
 {
     private readonly SchoolContext _context;
 
-    public MarkService(SchoolContext context)
+    public GradeService(SchoolContext context)
     {
         _context = context;
     }
