@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SchoolAPI.Models;
 
-public class Class
+public class SchoolClass
 {
     public Guid Id { get; set; }
 
@@ -23,7 +23,7 @@ public class Class
     [JsonIgnore]
     public ICollection<Subject>? Subjects { get; set; }
 
-    public Class()
+    public SchoolClass()
     {
         Students = new List<Student>();
         Subjects = new List<Subject>();

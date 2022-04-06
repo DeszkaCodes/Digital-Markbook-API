@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SchoolAPI.Services;
 
-public class ClassService : IService<Class>
+public class SchoolClassService : IService<SchoolClass>
 {
     private readonly SchoolContext _context;
 
-    public ClassService(SchoolContext context)
+    public SchoolClassService(SchoolContext context)
     {
         _context = context;
     }
 
-    public void Create(Class model)
+    public void Create(SchoolClass model)
     {
         throw new NotImplementedException();
     }
 
-    public void Create(Class[] model)
+    public void Create(SchoolClass[] model)
     {
         throw new NotImplementedException();
     }
@@ -28,7 +28,7 @@ public class ClassService : IService<Class>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Class> GetAll()
+    public IEnumerable<SchoolClass> GetAll()
     {
         #nullable disable
         return _context.Classes
@@ -39,7 +39,7 @@ public class ClassService : IService<Class>
         #nullable enable
     }
 
-    public Class? GetById(Guid id)
+    public SchoolClass? GetById(Guid id)
     {
         #nullable disable
         return _context.Classes
