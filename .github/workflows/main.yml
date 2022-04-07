@@ -10,10 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v2.0.0
+      - name: .Net Build
+        uses: EasyDesk/action-dotnet-build@v1.0.0
         with:
-          dotnet-version: 1.2.*
+          path: ./SchoolAPI.csproj
           
-      - name: Publis .NET Project
-        run: dotnet publish SchoolAPI.csproj -c Release -o release --nologo
+#      - name: Publis .NET Project
+#        run: dotnet publish SchoolAPI.csproj -c Release -o release --nologo
