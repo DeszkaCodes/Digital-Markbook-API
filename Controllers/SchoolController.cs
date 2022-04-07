@@ -63,7 +63,7 @@ public class SchoolController : ControllerBase
         var school = new School()
             {
                 Id = Guid.NewGuid(),
-                Name = name.ToTitleCase(),
+                Name = name,
                 Type = type
             };
 
