@@ -63,7 +63,7 @@ public class TeacherController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public ActionResult<Teacher> Create(
-        [FromForm] string name, [FromForm] string dateOfBirth, [FromForm] Gender gender, [FromForm] Guid schoolId,
+        [FromForm] string name, [FromForm] DateTime dateOfBirth, [FromForm] Gender gender, [FromForm] Guid schoolId,
         [FromServices] SchoolService schoolService)
     {
         var school = schoolService.GetById(schoolId);
@@ -71,22 +71,17 @@ public class TeacherController : ControllerBase
         if(school is null)
             return NotFound(new { error = "School not found" });
         
-        var date = DateTime.Now;
-
-        if (!DateTime.TryParse(dateOfBirth, out date))
-            return BadRequest(new { error = "Date of birth is not valid" });
-
-        if(date > DateTime.Today.AddYears(Teacher.MaximumAge))
+        if(TooOld(dateOfBirth))
             return BadRequest(new { error = "Teacher is too old" });
 
-        if(date < DateTime.Today.AddYears(-Teacher.MaximumAge))
+        if(TooYoung(dateOfBirth))
             return BadRequest(new { error = "Teacher is too young" });
 
         var teacher = new Teacher()
         {
             Id = Guid.NewGuid(),
             Name = name,
-            DateOfBirth = date,
+            DateOfBirth = dateOfBirth,
             Gender = gender,
             School = school
         };
@@ -157,21 +152,20 @@ public class TeacherController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult UpdateDateOfBirth([FromRoute] Guid id, [FromQuery] string birthDate)
+    public IActionResult UpdateDateOfBirth([FromRoute] Guid id, [FromQuery] DateTime dateOfBirth)
     {
         var teacher = _service.GetById(id);
 
         if(teacher is null)
             return NotFound(new { error = "Teacher not found" });
 
-        var date = DateTime.Now;
+        if(TooOld(dateOfBirth))
+            return BadRequest(new { error = "Teacher is too old" });
 
-        if(!DateTime.TryParse(birthDate, out date))
-            return BadRequest(new { error = "Date of birth is not valid" });
+        if(TooYoung(dateOfBirth))
+            return BadRequest(new { error = "Teacher is too young" });
 
-        //TODO: Validate date of birth
-
-        _service.UpdateBirthDate(id, date);
+        _service.UpdateBirthDate(id, dateOfBirth);
 
         return Ok();
     }
@@ -222,5 +216,15 @@ public class TeacherController : ControllerBase
             return NotFound(new { error = "Teacher not found" });
 
         return Ok(new { school = teacher.School });
+    }
+
+    private static bool TooYoung(DateTime dateOfBirth)
+    {
+        return dateOfBirth < DateTime.Today.AddYears(-Teacher.MinimumAge);
+    }
+
+    private static bool TooOld(DateTime dateOfBirth)
+    {
+        return dateOfBirth > DateTime.Today.AddYears(Teacher.MaximumAge);
     }
 }

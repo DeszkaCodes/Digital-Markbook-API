@@ -47,7 +47,7 @@ public class StudentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public ActionResult<Student> Create(
-        [FromForm] string name, [FromForm] string dateofbirth, [FromForm] Gender gender,
+        [FromForm] string name, [FromForm] DateTime dateOfBirth, [FromForm] Gender gender,
         [FromForm] Guid classId,
         [FromServices] SchoolService schoolService, [FromServices] SchoolClassService classService)
     {
@@ -56,28 +56,25 @@ public class StudentController : ControllerBase
         if(schoolClass is null)
             return NotFound(new { error = "School Class not found" });
 
-        var date = DateTime.Now;
-
-        if(!DateTime.TryParse(dateofbirth, out date))
-            return BadRequest(new { error = "Date of birth is not valid" });
-
-        if(date < DateTime.Today.AddYears(-Student.MinimumAge))
+        if(TooYoung(dateOfBirth))
             return BadRequest(new { error = "Student is too young" });
 
         var student = new Student()
-            {
-                Id = Guid.NewGuid(),
-                Name = name,
-                Gender = gender,
-                DateOfBirth = date,
-                School = schoolClass.School,
-                Class = schoolClass
-            };
+        {
+            Id = Guid.NewGuid(),
+            Name = name,
+            Gender = gender,
+            DateOfBirth = dateOfBirth,
+            School = schoolClass.School,
+            Class = schoolClass
+        };
 
         _service.Create(student);
-        
+
         return CreatedAtAction(nameof(Create), student);
     }
+
+    
 
     [HttpDelete("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -154,21 +151,17 @@ public class StudentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult UpdateDateOfBirth([FromRoute] Guid id, [FromQuery] string dateofbirth)
+    public IActionResult UpdateDateOfBirth([FromRoute] Guid id, [FromQuery] DateTime dateOfBirth)
     {
-        var date = DateTime.Now;
-
-        if(!DateTime.TryParse(dateofbirth, out date))
-            return BadRequest(new { error = "Date of birth is not valid" });
-
         var student = _service.GetById(id);
 
         if(student is null)
             return NotFound(new { error = "Student not found" });
 
-        //TODO: Validate date of birth
+        if(TooYoung(dateOfBirth))
+            return BadRequest(new { error = "Student is too young" });
 
-        _service.UpdateBirthDate(id, date);
+        _service.UpdateBirthDate(id, dateOfBirth);
 
         return Ok();
     }
@@ -222,4 +215,9 @@ public class StudentController : ControllerBase
 
     //    return Ok(new { school = student.School });
     //}
+
+    private static bool TooYoung(DateTime dateOfBirth)
+    {
+        return dateOfBirth < DateTime.Today.AddYears(-Student.MinimumAge);
+    }
 }
