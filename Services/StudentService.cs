@@ -120,7 +120,7 @@ public class StudentService : IService<Student>
         if(student is null)
             throw new NullReferenceException("Student does not exist");
 
-        if(newDate > DateTime.Now || newDate < DateTime.Now.AddYears(-6))
+        if(newDate > DateTime.Now.AddYears(-6))
             throw new ArgumentException("The gived date is not possible");
 
         student.DateOfBirth = newDate;

@@ -185,38 +185,40 @@ public class StudentController : ControllerBase
         return Ok(new { dateofbirth = student.DateOfBirth });
     }
 
-    [HttpPatch("{id:Guid}/school")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult UpdateSchool(
-        [FromRoute] Guid id, [FromQuery] Guid schoolId,
-        [FromServices] SchoolService schoolService)
-    {
-        var school = schoolService.GetById(schoolId);
+    //CHANGE TO CHANGE CLASS
 
-        if(school is null)
-            return NotFound(new { error = "School not found" });
+    //[HttpPatch("{id:Guid}/school")]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
+    //public IActionResult UpdateSchool(
+    //    [FromRoute] Guid id, [FromQuery] Guid schoolId,
+    //    [FromServices] SchoolService schoolService)
+    //{
+    //    var school = schoolService.GetById(schoolId);
 
-        var student = _service.GetById(id);
+    //    if(school is null)
+    //        return NotFound(new { error = "School not found" });
 
-        if(student is null)
-            return NotFound(new { error = "Student not found" });
+    //    var student = _service.GetById(id);
 
-        _service.UpdateSchool(id, schoolId);
+    //    if(student is null)
+    //        return NotFound(new { error = "Student not found" });
 
-        return Ok();
-    }
+    //    _service.UpdateSchool(id, schoolId);
 
-    [HttpGet("{id:Guid}/school")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<School> GetSchool([FromRoute] Guid id)
-    {
-        var student = _service.GetById(id);
+    //    return Ok();
+    //}
 
-        if (student is null)
-            return NotFound(new { error = "Student not found" });
+    //[HttpGet("{id:Guid}/school")]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
+    //public ActionResult<School> GetSchool([FromRoute] Guid id)
+    //{
+    //    var student = _service.GetById(id);
 
-        return Ok(new { school = student.School });
-    }
+    //    if (student is null)
+    //        return NotFound(new { error = "Student not found" });
+
+    //    return Ok(new { school = student.School });
+    //}
 }
