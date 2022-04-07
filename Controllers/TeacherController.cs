@@ -76,7 +76,11 @@ public class TeacherController : ControllerBase
         if (!DateTime.TryParse(dateOfBirth, out date))
             return BadRequest(new { error = "Date of birth is not valid" });
 
-        //TODO: Validate date of birth
+        if(date > DateTime.Today.AddYears(Teacher.MaximumAge))
+            return BadRequest(new { error = "Teacher is too old" });
+
+        if(date < DateTime.Today.AddYears(-Teacher.MaximumAge))
+            return BadRequest(new { error = "Teacher is too young" });
 
         var teacher = new Teacher()
         {
