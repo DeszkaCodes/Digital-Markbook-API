@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using SchoolAPI.Classes;
 
@@ -6,6 +7,9 @@ namespace SchoolAPI.Models;
 
 public class Subject
 {
+    [NotMapped]
+    public const int MinimumAge = 6;
+    
     public Guid Id { get; set; }
     
     [Required]
