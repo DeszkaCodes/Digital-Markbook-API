@@ -30,7 +30,7 @@ public class SchoolController : ControllerBase
         return _service.GetAll().Take(limit.Value).ToList();
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<School> Get([FromRoute] Guid id)
@@ -43,7 +43,7 @@ public class SchoolController : ControllerBase
         return school;
     }
 
-    [HttpGet("{id}/teachers")]
+    [HttpGet("{id:Guid}/teachers")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<Teacher>> GetAllTeachers([FromRoute] Guid id)
@@ -72,10 +72,10 @@ public class SchoolController : ControllerBase
         return CreatedAtAction(nameof(Create), school);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult Delete([FromQuery] Guid id)
+    public IActionResult Delete([FromRoute] Guid id)
     {
         var school = _service.GetById(id);
 
@@ -87,7 +87,7 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpPatch("{id}/name")]
+    [HttpPatch("{id:Guid}/name")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult UpdateName([FromRoute] Guid id, [FromQuery] string name)
@@ -102,7 +102,7 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/name")]
+    [HttpGet("{id:Guid}/name")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<string> GetName([FromRoute] Guid id)
@@ -115,7 +115,7 @@ public class SchoolController : ControllerBase
         return Ok(new { name = school.Name });
     }
 
-    [HttpPatch("{id}/type")]
+    [HttpPatch("{id:Guid}/type")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult UpdateType([FromRoute] Guid id, [FromQuery] SchoolType type)
@@ -130,7 +130,7 @@ public class SchoolController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/type")]
+    [HttpGet("{id:Guid}/type")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<SchoolType> GetType([FromRoute] Guid id)
