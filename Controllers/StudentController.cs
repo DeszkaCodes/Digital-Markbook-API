@@ -66,7 +66,7 @@ public class StudentController : ControllerBase
         var student = new Student()
             {
                 Id = Guid.NewGuid(),
-                Name = name.ToTitleCase(),
+                Name = name,
                 Gender = gender,
                 DateOfBirth = date,
                 School = schoolClass.School,
