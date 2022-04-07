@@ -55,8 +55,7 @@ public class StudentService : IService<Student>
 
     public void Create(Student student)
     {
-        _context.Students 
-            .Add(student);
+    #nullable disable
 
         if(student.School is null)
             throw new ArgumentNullException("School cannot be null");
@@ -64,13 +63,20 @@ public class StudentService : IService<Student>
         if(student.Class is null)
             throw new ArgumentNullException("Class cannot be null");
 
+        _context.Students
+            .Add(student);        
+
         _context.Schools
             .Attach(student.School);
 
         _context.Classes
             .Attach(student.Class);
 
+        _context.Teachers
+            .Attach(student.Class.HeadMaster);
+
         _context.SaveChanges();
+    #nullable enable
     }
 
     public void DeleteById(Guid id)
