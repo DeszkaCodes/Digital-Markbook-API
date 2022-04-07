@@ -7,9 +7,6 @@ namespace SchoolAPI.Models;
 
 public class Subject
 {
-    [NotMapped]
-    public const int MinimumAge = 6;
-    
     public Guid Id { get; set; }
     
     [Required]

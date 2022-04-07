@@ -8,6 +8,9 @@ namespace SchoolAPI.Models;
 
 public class Student : Human
 {
+    [NotMapped]
+    public const int MinimumAge = 6;
+
     [Required]
     public School? School { get; set; }
 
