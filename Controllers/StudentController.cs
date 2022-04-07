@@ -11,59 +11,58 @@ public class StudentController : ControllerBase
 {
     private StudentService _service;
 
-    private SchoolService _schoolService;
-
-    public StudentController(StudentService service, SchoolService schoolService)
+    public StudentController(StudentService service)
     {
         _service = service;
-        _schoolService = schoolService;
     }
 
     [HttpGet]
-    public ActionResult<List<Student>> GetMany(int? limit)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<IEnumerable<Student>> GetMany(int? limit)
     {
         if(limit is null)
             return _service.GetAll().ToList();
             
         if(limit <= 0)
-            return BadRequest();
-            
-        return _service.GetAll().Take((int)limit).ToList();
+            return BadRequest(new { error = "Limit must be greater than 0" });
+
+        return _service.GetAll().Take(limit.Value).ToList();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Student> Get(Guid id){
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<Student> Get([FromRoute] Guid id){
         var student = _service.GetById(id);
 
         if(student is null)
-            return NotFound();
+            return NotFound(new { error = "Student not found" });
 
         return student;
     }
 
     [HttpPost]
-    public ActionResult<Student> Create(string name, string dateofbirth, Gender gender, Guid schoolId)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public ActionResult<Student> Create(
+        [FromForm] string name, [FromForm] string dateofbirth, [FromForm] Gender gender, [FromForm] Guid schoolId,
+        [FromServices] SchoolService schoolService)
     {
-        var school = _schoolService.GetById(schoolId);
+        var school = schoolService.GetById(schoolId);
 
         if(school is null)
-            return NotFound();
+            return NotFound(new { error = "School not found" });
 
         var date = DateTime.Now;
 
         if(!DateTime.TryParse(dateofbirth, out date))
-            return BadRequest();
-
-        Guid id;
-
-        do
-        {
-            id = Guid.NewGuid();
-        }while(_service.IdExists(id));
+            return BadRequest(new { error = "Date of birth is not valid" });
 
         var student = new Student()
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 Name = name.ToTitleCase(),
                 Gender = gender,
                 DateOfBirth = date,
@@ -71,29 +70,34 @@ public class StudentController : ControllerBase
             };
 
         _service.Create(student);
-
-        return student;
+        
+        return CreatedAtAction(nameof(Create), student);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult Delete([FromRoute] Guid id)
     {
         var student = _service.GetById(id);
 
-        if(student is not null)
-        {
-            _service.DeleteById(id);
-            return Ok();
-        }
+        if(student is null)
+            return NotFound(new { error = "Student not found" });
 
-        return NotFound();        
+        _service.DeleteById(id);
+        
+        return Ok();
     }
 
     [HttpPatch("{id}/name")]
-    public IActionResult UpdateName(Guid id, string name)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult UpdateName([FromRoute] Guid id, [FromQuery] string name)
     {
-        if(_service.GetById(id) is null)
-            return NotFound();
+        var student = _service.GetById(id);
+
+        if(student is null)
+            return NotFound(new { error = "Student not found" });
 
         _service.UpdateName(id, name);
 
@@ -101,49 +105,61 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{id}/name")]
-    public ActionResult<string> GetName(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<string> GetName([FromRoute] Guid id)
     {
         var student = _service.GetById(id);
 
-        if (student is null || student.Name is null)
-            return NotFound();
+        if (student is null)
+            return NotFound(new { error = "Student not found" });
 
-        return Ok(new {
-            name = student.Name
-        });
+        return Ok(new { name = student.Name });
     }
 
     [HttpPatch("{id}/gender")]
-    public IActionResult UpdateGender(Guid id, Gender gender)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult UpdateGender([FromRoute] Guid id, [FromQuery] Gender gender)
     {
+        var student = _service.GetById(id);
+
+        if(student is null)
+            return NotFound(new { error = "Student not found" });
+
         _service.UpdateGender(id, gender);
 
         return Ok();
     }
 
     [HttpGet("{id}/gender")]
-    public ActionResult<Gender> GetGender(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<Gender> GetGender([FromRoute] Guid id)
     {
         var student = _service.GetById(id);
 
-        if (student is null)
-            return NotFound();
+        if(student is null)
+            return NotFound(new { error = "Student not fount" });
 
-        return Ok(new {
-            gender = student.Gender
-        });
+        return Ok(new { gender = student.Gender });
     }
 
     [HttpPatch("{id}/dateofbirth")]
-    public IActionResult UpdateDateOfBirth(Guid id, string dateofbirth)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult UpdateDateOfBirth([FromRoute] Guid id, [FromQuery] string dateofbirth)
     {
         var date = DateTime.Now;
 
         if(!DateTime.TryParse(dateofbirth, out date))
-            return BadRequest();
+            return BadRequest(new { error = "Date of birth is not valid" });
 
-        if(_service.GetById(id) is null)
-            return NotFound();
+        var student = _service.GetById(id);
+
+        if(student is null)
+            return NotFound(new { error = "Student not found" });
 
         _service.UpdateBirthDate(id, date);
 
@@ -151,44 +167,50 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{id}/dateofbirth")]
-    public ActionResult<DateTime> GetDateOfBirth(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<DateTime> GetDateOfBirth([FromRoute] Guid id)
     {
         var student = _service.GetById(id);
 
         if (student is null)
-            return NotFound();
+            return NotFound(new { error = "Student not found" });
 
-        return student.DateOfBirth;
+        return Ok(new { dateofbirth = student.DateOfBirth });
     }
 
     [HttpPatch("{id}/school")]
-    public IActionResult UpdateSchool(Guid id, Guid schoolId)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult UpdateSchool(
+        [FromRoute] Guid id, [FromQuery] Guid schoolId,
+        [FromServices] SchoolService schoolService)
     {
-        try
-        {
-            if(_service.GetById(id) is null)
-                return BadRequest();
+        var school = schoolService.GetById(schoolId);
 
-            _service.UpdateSchool(id, schoolId);
+        if(school is null)
+            return NotFound(new { error = "School not found" });
 
-            return Ok();
-        }
-        catch
-        {
-            return BadRequest();
-        }
+        var student = _service.GetById(id);
+
+        if(student is null)
+            return NotFound(new { error = "Student not found" });
+
+        _service.UpdateSchool(id, schoolId);
+
+        return Ok();
     }
 
     [HttpGet("{id}/school")]
-    public ActionResult<School> GetSchool(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<School> GetSchool([FromRoute] Guid id)
     {
         var student = _service.GetById(id);
 
-        if (student is null || student.School is null)
-            return NotFound();
+        if (student is null)
+            return NotFound(new { error = "Student not found" });
 
-        return Ok(new {
-            school = student.School
-        });
+        return Ok(new { school = student.School });
     }
 }
