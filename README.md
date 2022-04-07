@@ -12,8 +12,8 @@ This project is still **unfinished** so many things are still not implemented.
 - [x] Student Controller
 - [x] School Controller
 - [x] Teacher Controller
-- [ ] Subject Controller
-- [ ] Grades Controller
+- [x] Subject Controller
+- [x] Grades Controller
 - [ ] Absence Controller
 - [ ] Timetable Controller
 - [ ] News Controller
