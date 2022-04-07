@@ -48,14 +48,9 @@ public class StudentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public ActionResult<Student> Create(
         [FromForm] string name, [FromForm] string dateofbirth, [FromForm] Gender gender,
-        [FromForm] Guid schoolId, [FromForm] Guid classId,
+        [FromForm] Guid classId,
         [FromServices] SchoolService schoolService, [FromServices] SchoolClassService classService)
     {
-        var school = schoolService.GetById(schoolId);
-
-        if(school is null)
-            return NotFound(new { error = "School not found" });
-
         var schoolClass = classService.GetById(classId);
 
         if(schoolClass is null)
@@ -74,7 +69,7 @@ public class StudentController : ControllerBase
                 Name = name.ToTitleCase(),
                 Gender = gender,
                 DateOfBirth = date,
-                School = school,
+                School = schoolClass.School,
                 Class = schoolClass
             };
 
