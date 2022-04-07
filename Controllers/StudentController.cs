@@ -30,7 +30,7 @@ public class StudentController : ControllerBase
         return _service.GetAll().Take(limit.Value).ToList();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<Student> Get([FromRoute] Guid id){
@@ -74,7 +74,7 @@ public class StudentController : ControllerBase
         return CreatedAtAction(nameof(Create), student);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:Guid}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult Delete([FromRoute] Guid id)
@@ -89,7 +89,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpPatch("{id}/name")]
+    [HttpPatch("{id:Guid}/name")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult UpdateName([FromRoute] Guid id, [FromQuery] string name)
@@ -104,7 +104,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/name")]
+    [HttpGet("{id:Guid}/name")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<string> GetName([FromRoute] Guid id)
@@ -117,7 +117,7 @@ public class StudentController : ControllerBase
         return Ok(new { name = student.Name });
     }
 
-    [HttpPatch("{id}/gender")]
+    [HttpPatch("{id:Guid}/gender")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult UpdateGender([FromRoute] Guid id, [FromQuery] Gender gender)
@@ -132,7 +132,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/gender")]
+    [HttpGet("{id:Guid}/gender")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<Gender> GetGender([FromRoute] Guid id)
@@ -145,7 +145,7 @@ public class StudentController : ControllerBase
         return Ok(new { gender = student.Gender });
     }
 
-    [HttpPatch("{id}/dateofbirth")]
+    [HttpPatch("{id:Guid}/dateofbirth")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -166,7 +166,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/dateofbirth")]
+    [HttpGet("{id:Guid}/dateofbirth")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<DateTime> GetDateOfBirth([FromRoute] Guid id)
@@ -179,7 +179,7 @@ public class StudentController : ControllerBase
         return Ok(new { dateofbirth = student.DateOfBirth });
     }
 
-    [HttpPatch("{id}/school")]
+    [HttpPatch("{id:Guid}/school")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult UpdateSchool(
@@ -201,7 +201,7 @@ public class StudentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{id}/school")]
+    [HttpGet("{id:Guid}/school")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<School> GetSchool([FromRoute] Guid id)
