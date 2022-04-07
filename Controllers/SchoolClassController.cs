@@ -153,28 +153,6 @@ public class SchoolClassController : ControllerBase
         return Ok(new { headmaster = schoolClass.HeadMaster });
     }
 
-    [HttpPatch("{id:Guid}/school")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult UpdateSchool(
-        [FromRoute] Guid id, [FromQuery] Guid schoolId,
-        [FromServices] SchoolService schoolService)
-    {
-        var schoolClass = _service.GetById(id);
-
-        if(schoolClass is null)
-            return NotFound(new { error = "School class does not exist" });
-
-        var school = schoolService.GetById(schoolId);
-
-        if(school is null)
-            return NotFound(new { error = "School does not exist" });
-
-        _service.UpdateSchool(schoolClass.Id, schoolId);
-
-        return Ok();
-    }
-
     [HttpGet("{id:Guid}/school")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
