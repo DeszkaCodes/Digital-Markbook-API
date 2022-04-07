@@ -46,7 +46,7 @@ public class SchoolClassController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public ActionResult<SchoolClass> Create(
-        [FromForm] string name, [FromForm] Guid headMasterId, [FromForm] Guid schoolId,
+        [FromForm] string name, [FromForm] Guid headMasterId,
         [FromServices] TeacherService teacherService, [FromServices] SchoolService schoolService)
     {
         var headMaster = teacherService.GetById(headMasterId);
@@ -54,17 +54,12 @@ public class SchoolClassController : ControllerBase
         if(headMaster is null)
             return NotFound(new { error = "Teacher does not exist" });
 
-        var school = schoolService.GetById(schoolId);
-
-        if(school is null)
-            return NotFound(new { error = "School does not exist" });
-
         var schoolClass = new SchoolClass()
         {
             Id = Guid.NewGuid(),
             Name = name,
             HeadMaster = headMaster,
-            School = school
+            School = headMaster.School
         };
 
         _service.Create(schoolClass);
