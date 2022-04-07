@@ -44,13 +44,10 @@ public class StudentService : IService<Student>
 
     public void Create(Student[] students)
     {
-        foreach(var student in students)
+        for(var i = 0; i < students.Length; i++)
         {
-            _context.Students
-                .Add(student);
+            Create(students[i]);
         }
-
-        _context.SaveChanges();
     }
 
     public void Create(Student student)
@@ -62,6 +59,11 @@ public class StudentService : IService<Student>
 
         if(student.Class is null)
             throw new ArgumentNullException("Class cannot be null");
+
+        if(student.Name is null)
+            throw new ArgumentNullException("Name cannot be null");
+
+        student.Name.ToTitleCase();
 
         _context.Students
             .Add(student);        
@@ -96,7 +98,7 @@ public class StudentService : IService<Student>
         if(student is null)
             throw new NullReferenceException("Student does not exist");
 
-        student.Name = newName;
+        student.Name = newName.ToTitleCase();
 
         _context.SaveChanges();
     }

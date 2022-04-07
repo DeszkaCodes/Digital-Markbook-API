@@ -1,6 +1,7 @@
 ﻿using SchoolAPI.Data;
 using SchoolAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Classes;
 
 namespace SchoolAPI.Services;
 
@@ -24,6 +25,7 @@ public class SchoolClassService : IService<SchoolClass>
         if(model.School is null)
             throw new ArgumentNullException("School cannot be null");
 
+        model.Name.ToTitleCase();
         _context.Classes.Add(model);
 
         _context.Teachers.Attach(model.HeadMaster);
@@ -87,7 +89,7 @@ public class SchoolClassService : IService<SchoolClass>
         if(schoolClass is null)
             throw new NullReferenceException("School class does not exist");
 
-        schoolClass.Name = name;
+        schoolClass.Name = name.ToTitleCase();
 
         _context.SaveChanges();
     }

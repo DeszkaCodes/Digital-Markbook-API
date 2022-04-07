@@ -30,11 +30,16 @@ public class TeacherService : IService<Teacher>
 
     public void Create(Teacher teacher)
     {
-        _context.Teachers
-            .Add(teacher);
-
         if(teacher.School is null)
             throw new ArgumentNullException("School cannot be null");
+
+        if(teacher.Name is null)
+            throw new ArgumentNullException("Name cannot be null");
+
+        teacher.Name.ToTitleCase();
+
+        _context.Teachers
+            .Add(teacher);
 
         _context.Schools
             .Attach(teacher.School);
@@ -79,7 +84,7 @@ public class TeacherService : IService<Teacher>
         if(teacher is null)
             throw new NullReferenceException("Teacher does not exist");
 
-        teacher.Name = name;
+        teacher.Name = name.ToTitleCase();
 
         _context.SaveChanges();
     }

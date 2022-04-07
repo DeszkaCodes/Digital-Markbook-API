@@ -37,21 +37,23 @@ public class SchoolService : IService<School>
 
     public void Create(School school)
     {
+        if(school.Name is null)
+            throw new ArgumentNullException("School name cannot be null");
+
+        school.Name.ToTitleCase();
+        
         _context.Schools
             .Add(school);
-
+        
         _context.SaveChanges();
     }
 
     public void Create(School[] schools)
     {
-        foreach(var school in schools)
+        for(var i = 0; i < schools.Length; i++)
         {
-            _context.Schools
-                .Add(school);
+            Create(schools[i]);
         }
-
-        _context.SaveChanges();
     }
 
     public void DeleteById(Guid id)
@@ -79,7 +81,7 @@ public class SchoolService : IService<School>
         if(school is null)
             throw new NullReferenceException("School does not exist");
 
-        school.Name = name;
+        school.Name = name.ToTitleCase();
 
         _context.SaveChanges();
     }
