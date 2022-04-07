@@ -60,6 +60,8 @@ public class StudentController : ControllerBase
         if(!DateTime.TryParse(dateofbirth, out date))
             return BadRequest(new { error = "Date of birth is not valid" });
 
+        //TODO: Validate date of birth
+
         var student = new Student()
             {
                 Id = Guid.NewGuid(),
@@ -160,6 +162,8 @@ public class StudentController : ControllerBase
 
         if(student is null)
             return NotFound(new { error = "Student not found" });
+
+        //TODO: Validate date of birth
 
         _service.UpdateBirthDate(id, date);
 

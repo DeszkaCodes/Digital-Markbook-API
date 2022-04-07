@@ -76,6 +76,8 @@ public class TeacherController : ControllerBase
         if (!DateTime.TryParse(dateOfBirth, out date))
             return BadRequest(new { error = "Date of birth is not valid" });
 
+        //TODO: Validate date of birth
+
         var teacher = new Teacher()
         {
             Id = Guid.NewGuid(),
@@ -162,6 +164,8 @@ public class TeacherController : ControllerBase
 
         if(!DateTime.TryParse(birthDate, out date))
             return BadRequest(new { error = "Date of birth is not valid" });
+
+        //TODO: Validate date of birth
 
         _service.UpdateBirthDate(id, date);
 
