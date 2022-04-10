@@ -15,4 +15,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Teacher\" />
+    <Folder Include="Controllers\School\" />
+    <Folder Include="Controllers\Student\" />
+    <Folder Include="Controllers\SchoolClass\" />
+  </ItemGroup>
+
 </Project>
